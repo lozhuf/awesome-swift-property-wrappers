@@ -11,7 +11,13 @@ struct MyUserDefaultsStore {
     @UserDefault("com.someApp.username", defaultValue: "Nathaniel Merriweather")
     static var username: String
 }
+```
+<details>
+<summary>
+    🚀 Implementation
+</summary>
 
+```swift
 @propertyWrapper
 struct UserDefault<T> {
     let key: String
@@ -32,6 +38,8 @@ struct UserDefault<T> {
     }
 }
 ```
+</details>
+
 
 ### Command line option
 …
