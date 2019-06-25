@@ -64,3 +64,4 @@ https://medium.com/better-programming/swift-property-delegates-powerful-new-anno
 ### Notification Trigger
 ### Aspect Ratio
 ### Clamped
+### UIControl Action callbacks
