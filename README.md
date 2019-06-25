@@ -42,14 +42,13 @@ struct UserDefault<T> {
 
 
 ### Command line option
-…
 
-### Debounce
-…
+### Debounced/throttled
 
 ### Property Validation
-…
 https://medium.com/better-programming/swift-property-delegates-powerful-new-annotations-attributes-system-2e3968b29624
 
-### Localization
-…
+### Localized
+### Notification Trigger
+### Aspect Ratio
+### Clamped
