@@ -8,7 +8,7 @@ struct MyUserDefaultsStore {
     @UserDefault("com.someApp.hasSeenIntro", defaultValue: false)
     static var hasSeenIntro: Bool
 
-    @UserDefault("com.someApp.username", defaultValue: "Nathaniel Merriweather)
+    @UserDefault("com.someApp.username", defaultValue: "Nathaniel Merriweather")
     static var username: String
 }
 
