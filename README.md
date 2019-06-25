@@ -4,13 +4,19 @@ Examples of cool things you can do with Swift's Property Wrappers.
 
 ### User Defaults
 ```swift
-struct MyUserDefaultsStore {
-    @UserDefault("com.someApp.hasSeenIntro", defaultValue: false)
+struct UDStore {
+    @UserDefault("com.someApp.hasSeenIntro", defaultValue: false, defaultsStore: UserDefaults())
     static var hasSeenIntro: Bool
-
+    
     @UserDefault("com.someApp.username", defaultValue: "Nathaniel Merriweather")
     static var username: String
 }
+
+UDStore.username // "Nathaniel Merriweather"
+UDStore.username = "Dan"
+UDStore.username // "Dan"
+UDStore.$username.reset()
+UDStore.username // "Nathaniel Merriweather"
 ```
 <details>
 <summary>
@@ -22,19 +28,25 @@ struct MyUserDefaultsStore {
 struct UserDefault<T> {
     let key: String
     let defaultValue: T
-
-    init(_ key: String, defaultValue: T) {
+    let defaultsStore: UserDefaults
+    
+    init(_ key: String, defaultValue: T, defaultsStore: UserDefaults = .standard) {
         self.key = key
         self.defaultValue = defaultValue
+        self.defaultsStore = defaultsStore
     }
-
+    
     var value: T {
         get {
-            return UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
+            return self.defaultsStore.object(forKey: key) as? T ?? defaultValue
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: key)
+            self.defaultsStore.set(newValue, forKey: key)
         }
+    }
+    
+    func reset() {
+        self.defaultsStore.set(nil, forKey: key)
     }
 }
 ```
