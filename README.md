@@ -4,7 +4,7 @@ Examples of cool things you can do with Swift's Property Wrappers.
 
 > Note: In some examples of Property Wrappers the `initialValue` property is implicit. As of Xcode Beta 2 this is not the case, and initialValue must be explicitly specified.
 
-### @Clamped
+## @Clamped
 
 ```swift
 struct Foo {
@@ -86,7 +86,7 @@ extension Clamped {
 ```
 </details>
 
-### @UnitInterval
+## @UnitInterval
 Uses the `@Clamped` propertyWrapper with a range of `0...1`.
 
 ```swift
@@ -118,7 +118,7 @@ struct UnitInterval<Value: FloatingPoint> {
 ```
 </details>
 
-### @UserDefault
+## @UserDefault
 
 ```swift
 struct UDStore {
