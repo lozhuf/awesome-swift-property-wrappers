@@ -32,20 +32,19 @@ Foo.blob // 6.0
 </summary>
 
 ```swift
-
 @propertyWrapper
-struct Clamped<V: Comparable> {
-    let min: V?
-    let max: V?
-    var actualValue: V
-    
-    fileprivate init(initialValue: V, minVal: V?, maxVal: V?) {
+struct Clamped<Value: Comparable> {
+    let min: Value?
+    let max: Value?
+    var actualValue: Value
+
+    fileprivate init(initialValue: Value, minVal: Value?, maxVal: Value?) {
         self.actualValue = initialValue
-        self.min = min
-        self.max = max
+        self.min = minVal
+        self.max = maxVal
     }
     
-    var value: V {
+    var value: Value {
         get {
             var val = self.actualValue
             
@@ -63,25 +62,57 @@ struct Clamped<V: Comparable> {
     }
 }
 
-extension Clamped {    
-    init(initialValue: V, min: V, max: V) {
+extension Clamped {
+    init(initialValue: Value, min: Value, max: Value) {
         self.init(initialValue: initialValue, minVal: min, maxVal: max)
     }
-    init(initialValue: V, min: V) {
+    init(initialValue: Value, min: Value) {
         self.init(initialValue: initialValue, minVal: min, maxVal: nil)
     }
-    init(initialValue: V, max: V) {
+    init(initialValue: Value, max: Value) {
         self.init(initialValue: initialValue, minVal: nil, maxVal: max)
     }
     
-    init(initialValue: V, range: ClosedRange<V>) {
+    init(initialValue: Value, range: ClosedRange<Value>) {
         self.init(initialValue: initialValue, min: range.lowerBound, max: range.upperBound)
     }
-    init(initialValue: V, range: PartialRangeFrom<V>) {
+    init(initialValue: Value, range: PartialRangeFrom<Value>) {
         self.init(initialValue: initialValue, min: range.lowerBound)
     }
-    init(initialValue: V, range: PartialRangeThrough<V>) {
+    init(initialValue: Value, range: PartialRangeThrough<Value>) {
         self.init(initialValue: initialValue, max: range.upperBound)
+    }
+}
+```
+</details>
+
+### @UnitInterval
+Uses the `@Clamped` propertyWrapper with a range of `0...1`.
+
+```swift
+struct Foo {
+    @UnitInterval
+    static var bar: Double = 0.5
+}
+
+Foo.bar // 0.5
+Foo.bar = 2
+Foo.bar // 1.0
+```
+
+<details>
+<summary>
+    🚀 Implementation
+</summary>
+
+```swift
+@propertyWrapper
+struct UnitInterval<Value: FloatingPoint> {
+    @Clamped(initialValue: 0, range: 0...1)
+    var value: Value
+    
+    init(initialValue: Value) {
+        self.value = initialValue
     }
 }
 ```
@@ -151,7 +182,6 @@ To be fleshed out...
 - Localized
 - Notification Trigger
 - Aspect Ratio
-- Clamped
 - UIControl Action callbacks
 - https://nshipster.com/propertywrapper/
     - A @Positive / @NonNegative property wrapper that provides the unsigned guarantees to signed integer types.
