@@ -2,7 +2,93 @@
 
 Examples of cool things you can do with Swift's Property Wrappers.
 
-### User Defaults
+> Note: In some examples of Property Wrappers the `initialValue` property is implicit. As of Xcode Beta 2 this is not the case, and initialValue must be explicitly specified.
+
+### @Clamped
+
+```swift
+struct Foo {
+    @Clamped(initialValue: 5, range: 0...10)
+    static var bar: Int
+    @Clamped(initialValue: 5, range: 8...)
+    static var baz: Int
+    @Clamped(initialValue: 5, range: ...4)
+    static var bosh: Int
+    @Clamped(initialValue: 5, min: 6)
+    static var blob: Double
+}
+
+Foo.bar // 5
+Foo.bar = 15
+Foo.bar // 10
+Foo.baz // 8
+Foo.bosh // 4
+Foo.blob // 6.0
+```
+
+<details>
+<summary>
+    🚀 Implementation
+</summary>
+
+```swift
+
+@propertyWrapper
+struct Clamped<V: Comparable> {
+    let min: V?
+    let max: V?
+    var actualValue: V
+    
+    fileprivate init(initialValue: V, minVal: V?, maxVal: V?) {
+        self.actualValue = initialValue
+        self.min = min
+        self.max = max
+    }
+    
+    var value: V {
+        get {
+            var val = self.actualValue
+            
+            if let min = self.min {
+                val = Swift.max(val, min)
+            }
+            if let max = self.max {
+                val = Swift.min(val, max)
+            }
+            return val
+        }
+        set {
+            self.actualValue = newValue
+        }
+    }
+}
+
+extension Clamped {    
+    init(initialValue: V, min: V, max: V) {
+        self.init(initialValue: initialValue, minVal: min, maxVal: max)
+    }
+    init(initialValue: V, min: V) {
+        self.init(initialValue: initialValue, minVal: min, maxVal: nil)
+    }
+    init(initialValue: V, max: V) {
+        self.init(initialValue: initialValue, minVal: nil, maxVal: max)
+    }
+    
+    init(initialValue: V, range: ClosedRange<V>) {
+        self.init(initialValue: initialValue, min: range.lowerBound, max: range.upperBound)
+    }
+    init(initialValue: V, range: PartialRangeFrom<V>) {
+        self.init(initialValue: initialValue, min: range.lowerBound)
+    }
+    init(initialValue: V, range: PartialRangeThrough<V>) {
+        self.init(initialValue: initialValue, max: range.upperBound)
+    }
+}
+```
+</details>
+
+### @UserDefault
+
 ```swift
 struct UDStore {
     @UserDefault("com.someApp.hasSeenIntro", defaultValue: false, defaultsStore: UserDefaults())
@@ -18,6 +104,7 @@ UDStore.username // "Dan"
 UDStore.$username.reset()
 UDStore.username // "Nathaniel Merriweather"
 ```
+
 <details>
 <summary>
     🚀 Implementation
