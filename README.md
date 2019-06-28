@@ -66,3 +66,15 @@ To be fleshed out...
 - Aspect Ratio
 - Clamped
 - UIControl Action callbacks
+- https://nshipster.com/propertywrapper/
+    - A @Positive / @NonNegative property wrapper that provides the unsigned guarantees to signed integer types.
+    - A @NonZero property wrapper that ensures that a number value is either greater than or less than 0.
+    - @Validated or @Whitelisted / @Blacklisted property wrappers that restrict which values can be assigned.
+    - An @Audited property wrapper that logs each time a property is read or written to.
+    - A @Decaying property wrapper that divides a set number value each time the value is read.
+    - Defining @CompatibilityEquivalence such that wrapped String properties with the values "①" and "1" are considered equal.
+    - A @Approximate property wrapper to refine equality semantics for floating-point types (See also SE-0259)
+    - A @Ranked property wrapper that takes a function that defines strict ordering for, say, enumerated values; this could allow, for example, the playing card rank .ace to be treated either low or high in different contexts.
+    - A @Transformed property wrapper that applies ICU transforms to incoming string values.
+    - A @Normalized property wrapper that allows a String property to customize its normalization form.
+    - A @Quantized / @Rounded / @Truncated property that quantizes values to a particular degree (e.g. “round up to nearest ½”), but internally tracks precise intermediate values to prevent cascading rounding errors.
