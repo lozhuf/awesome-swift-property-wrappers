@@ -53,15 +53,16 @@ struct UserDefault<T> {
 </details>
 
 
-### Command line option
+## Possible ideas
 
-### Debounced/throttled
+To be fleshed out...
 
-### Property Validation
-https://medium.com/better-programming/swift-property-delegates-powerful-new-annotations-attributes-system-2e3968b29624
-
-### Localized
-### Notification Trigger
-### Aspect Ratio
-### Clamped
-### UIControl Action callbacks
+- https://github.com/DougGregor/swift-evolution/blob/property-wrappers/proposals/0258-property-wrappers.md
+- Command line option
+- Debounced/throttled
+- Property Validation (https://medium.com/better-programming/swift-property-delegates-powerful-new-annotations-attributes-system-2e3968b29624)
+- Localized
+- Notification Trigger
+- Aspect Ratio
+- Clamped
+- UIControl Action callbacks
